@@ -1,0 +1,128 @@
+/* Aquí pondremos estilos más adelante *//* Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button[type="submit"] {
+  grid-column: 1 / -1;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+ul#listaEquipos {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+ul#listaEquipos li {
+  background: white;
+  margin-bottom: 12px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+ul#listaEquipos li strong {
+  font-weight: 700;
+}
+#tablaEquipos {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#tablaEquipos thead {
+  background-color: #007bff;
+  color: white;
+}
+
+#tablaEquipos th, #tablaEquipos td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#tablaEquipos tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+th, td {
+  padding: 6px 8px;      /* Más pequeño que antes */
+  min-width: 80px;       /* Le das un ancho mínimo para que no queden muy anchas */
+  max-width: 150px;      /* O limita un poco el ancho máximo */
+  white-space: nowrap;   /* Evita que el texto se parta en varias líneas */
+  overflow: hidden;      /* Para que no se desborde */
+  text-overflow: ellipsis; /* Muestra "..." si el texto es muy largo */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}

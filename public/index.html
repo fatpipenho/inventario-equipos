@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventario de Equipos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 15px;
+      background: #f7f9fc;
+      color: #333;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #004080;
+    }
+    form {
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+      margin-bottom: 30px;
+    }
+    form label {
+      display: block;
+      margin: 10px 0 4px;
+      font-weight: bold;
+    }
+    form input[type="text"],
+    form input[type="date"] {
+      width: 100%;
+      padding: 6px 8px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+    }
+    form button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #007acc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    form button:hover {
+      background: #005f99;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 0 10px #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #007acc;
+      color: white;
+      user-select: none;
+    }
+    tr:hover {
+      background-color: #f0f8ff;
+    }
+    button.btn-editar, button.btn-eliminar {
+      padding: 5px 10px;
+      margin-right: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.btn-editar {
+      background-color: #ffc107;
+      color: #333;
+    }
+    button.btn-eliminar {
+      background-color: #dc3545;
+      color: white;
+    }
+    button.btn-editar:hover {
+      background-color: #e0a800;
+    }
+    button.btn-eliminar:hover {
+      background-color: #bd2130;
+    }
+  </style>
+</head>
+<body>
+  <h1>Inventario de Equipos</h1>
+
+  <form id="formulario">
+    <label for="tipo">Tipo:</label>
+    <input id="tipo" name="tipo" type="text" required />
+
+    <label for="marca">Marca:</label>
+    <input id="marca" name="marca" type="text" required />
+
+    <label for="modelo">Modelo:</label>
+    <input id="modelo" name="modelo" type="text" required />
+
+    <label for="serie">Serie:</label>
+    <input id="serie" name="serie" type="text" required />
+
+    <label for="usuario">Usuario:</label>
+    <input id="usuario" name="usuario" type="text" required />
+
+    <label for="estado">Estado:</label>
+    <input id="estado" name="estado" type="text" required />
+
+    <label for="fechaIngreso">Fecha de ingreso:</label>
+    <input id="fechaIngreso" name="fechaIngreso" type="date" required />
+
+    <label for="ubicacion">Ubicación:</label>
+    <input id="ubicacion" name="ubicacion" type="text" required />
+
+    <button type="submit">Agregar Equipo</button>
+  </form>
+
+  <h2>Equipos en inventario</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Serie</th>
+        <th>Usuario</th>
+        <th>Estado</th>
+        <th>Fecha ingreso</th>
+        <th>Ubicación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tablaEquipos">
+      <!-- Filas agregadas aquí -->
+    </tbody>
+  </table>
+
+  <script src="/main.js"></script>
+</body>
+</html>

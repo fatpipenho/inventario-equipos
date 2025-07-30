@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventario de Equipos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 15px;
+      background: #f7f9fc;
+      color: #333;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #004080;
+    }
+    form {
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+      margin-bottom: 30px;
+    }
+    form label {
+      display: block;
+      margin: 10px 0 4px;
+      font-weight: bold;
+    }
+    form input[type="text"],
+    form input[type="date"] {
+      width: 100%;
+      padding: 6px 8px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+    }
+    form button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #007acc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    form button:hover {
+      background: #005f99;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 0 10px #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #007acc;
+      color: white;
+      user-select: none;
+    }
+    tr:hover {
+      background-color: #f0f8ff;
+    }
+    button.btn-editar, button.btn-eliminar {
+      padding: 5px 10px;
+      margin-right: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.btn-editar {
+      background-color: #ffc107;
+      color: #333;
+    }
+    button.btn-eliminar {
+      background-color: #dc3545;
+      color: white;
+    }
+    button.btn-editar:hover {
+      background-color: #e0a800;
+    }
+    button.btn-eliminar:hover {
+      background-color: #bd2130;
+    }
+  </style>
+</head>
+<body>
+  <h1>Inventario de Equipos</h1>
+
+  <form id="formulario">
+    <label for="tipo">Tipo:</label>
+    <input id="tipo" name="tipo" type="text" required />
+
+    <label for="marca">Marca:</label>
+    <input id="marca" name="marca" type="text" required />
+
+    <label for="modelo">Modelo:</label>
+    <input id="modelo" name="modelo" type="text" required />
+
+    <label for="serie">Serie:</label>
+    <input id="serie" name="serie" type="text" required />
+
+    <label for="usuario">Usuario:</label>
+    <input id="usuario" name="usuario" type="text" required />
+
+    <label for="estado">Estado:</label>
+    <input id="estado" name="estado" type="text" required />
+
+    <label for="fechaIngreso">Fecha de ingreso:</label>
+    <input id="fechaIngreso" name="fechaIngreso" type="date" required />
+
+    <label for="ubicacion">Ubicación:</label>
+    <input id="ubicacion" name="ubicacion" type="text" required />
+
+    <button type="submit">Agregar Equipo</button>
+  </form>
+
+  <h2>Equipos en inventario</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Serie</th>
+        <th>Usuario</th>
+        <th>Estado</th>
+        <th>Fecha ingreso</th>
+        <th>Ubicación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tablaEquipos">
+      <!-- Filas agregadas aquí -->
+    </tbody>
+  </table>
+
+  <script>
+    const formulario = document.getElementById('formulario');
+    const tablaEquipos = document.getElementById('tablaEquipos');
+
+    // Guardamos la función submit original para restaurar después de editar
+    let modoEdicion = false;
+    let equipoEditandoId = null;
+
+    // Cargar equipos al iniciar
+    async function cargarEquipos() {
+      const res = await fetch('/api/equipos');
+      const equipos = await res.json();
+      tablaEquipos.innerHTML = '';
+      equipos.forEach(equipo => agregarFila(equipo));
+    }
+
+    function agregarFila(equipo) {
+      const tr = document.createElement('tr');
+      tr.dataset.id = equipo.id;
+
+      tr.innerHTML = `
+        <td>${equipo.tipo}</td>
+        <td>${equipo.marca}</td>
+        <td>${equipo.modelo}</td>
+        <td>${equipo.serie}</td>
+        <td>${equipo.usuario}</td>
+        <td>${equipo.estado}</td>
+        <td>${equipo.fechaIngreso}</td>
+        <td>${equipo.ubicacion}</td>
+        <td>
+          <button class="btn-editar">✏️ Editar</button>
+          <button class="btn-eliminar">🗑️ Eliminar</button>
+        </td>
+      `;
+
+      tablaEquipos.appendChild(tr);
+
+      tr.querySelector('.btn-eliminar').addEventListener('click', () => eliminarEquipo(equipo.id, tr));
+      tr.querySelector('.btn-editar').addEventListener('click', () => editarEquipo(equipo, tr));
+    }
+
+    async function eliminarEquipo(id, fila) {
+      if (!confirm('¿Seguro que quieres eliminar este equipo?')) return;
+
+      // Aquí puedes hacer llamada a backend DELETE /api/equipos/:id
+      // Por ahora solo elimina visualmente
+      fila.remove();
+
+      // TODO: llamada real al backend para eliminar
+      // await fetch(`/api/equipos/${id}`, { method: 'DELETE' });
+    }
+
+    function editarEquipo(equipo, fila) {
+      modoEdicion = true;
+      equipoEditandoId = equipo.id;
+
+      formulario.tipo.value = equipo.tipo;
+      formulario.marca.value = equipo.marca;
+      formulario.modelo.value = equipo.modelo;
+      formulario.serie.value = equipo.serie;
+      formulario.usuario.value = equipo.usuario;
+      formulario.estado.value = equipo.estado;
+      formulario.fechaIngreso.value = equipo.fechaIngreso;
+      formulario.ubicacion.value = equipo.ubicacion;
+
+      formulario.querySelector('button[type="submit"]').textContent = 'Guardar Cambios';
+    }
+
+    formulario.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const datos = new FormData(formulario);
+      const equipo = {};
+      datos.forEach((valor, llave) => {
+        equipo[llave] = valor;
+      });
+
+      if (modoEdicion) {
+        equipo.id = equipoEditandoId;
+
+        // Aquí haces llamada PUT /api/equipos/:id para actualizar en backend
+        // Por ahora solo actualizamos en la tabla visualmente
+
+        // Buscar la fila que tiene ese id y actualizarla
+        const filas = tablaEquipos.querySelectorAll('tr');
+        filas.forEach(fila => {
+          if (fila.dataset.id === equipo.id) {
+            fila.innerHTML = `
+              <td>${equipo.tipo}</td>
+              <td>${equipo.marca}</td>
+              <td>${equipo.modelo}</td>
+              <td>${equipo.serie}</td>
+              <td>${equipo.usuario}</td>
+              <td>${equipo.estado}</td>
+              <td>${equipo.fechaIngreso}</td>
+              <td>${equipo.ubicacion}</td>
+              <td>
+                <button class="btn-editar">✏️ Editar</button>
+                <button class="btn-eliminar">🗑️ Eliminar</button>
+              </td>
+            `;
+
+            // Reasignar eventos
+            fila.querySelector('.btn-eliminar').addEventListener('click', () => eliminarEquipo(equipo.id, fila));
+            fila.querySelector('.btn-editar').addEventListener('click', () => editarEquipo(equipo, fila));
+          }
+        });
+
+        modoEdicion = false;
+        equipoEditandoId = null;
+        formulario.querySelector('button[type="submit"]').textContent = 'Agregar Equipo';
+
+      } else {
+        // Crear nuevo equipo (llamar POST /api/equipos)
+        // Para este ejemplo, generamos un id temporal
+        equipo.id = Date.now().toString();
+
+        agregarFila(equipo);
+
+        // Aquí puedes hacer POST real para guardar en backend
+        // await fetch('/api/equipos', {...})
+
+      }
+
+      formulario.reset();
+    });
+
+    cargarEquipos();
+  </script>
+</body>
+</html>

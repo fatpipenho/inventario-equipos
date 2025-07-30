@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1753836699936",
+    "marca": "asdas",
+    "modelo": "asdas",
+    "usuario": "asdsa",
+    "estado": "asdas",
+    "fechaIngreso": "1212-12-12",
+    "ubicacion": "asdasd"
+  },
+  {
+    "id": "1753839213622",
+    "marca": "HP",
+    "modelo": "MOASDMOA",
+    "usuario": "FELIPIN",
+    "estado": "ACTIVO",
+    "fechaIngreso": "1990-02-12",
+    "ubicacion": "ARRIBA"
+  },
+  {
+    "id": "1753839905655",
+    "marca": "asda",
+    "modelo": "asdas",
+    "usuario": "fgdgdfdfg",
+    "estado": "dfgdfg",
+    "fechaIngreso": "1990-05-04",
+    "ubicacion": "asda"
+  },
+  {
+    "id": "1753840098941",
+    "marca": "asdas",
+    "modelo": "asdasd",
+    "usuario": "sasdas",
+    "estado": "asdas",
+    "fechaIngreso": "1990-12-12",
+    "ubicacion": "sadasdf"
+  },
+  {
+    "id": "1753840429961",
+    "marca": "asdas",
+    "modelo": "asdasd",
+    "usuario": "asdas",
+    "estado": "asdas",
+    "fechaIngreso": "1990-12-12",
+    "ubicacion": "sadas"
+  },
+  {
+    "id": "1753840544792",
+    "marca": "asdas",
+    "modelo": "asdas",
+    "usuario": "123123",
+    "estado": "asdasd",
+    "fechaIngreso": "123123-03-12",
+    "ubicacion": "asdas"
+  }
+]
