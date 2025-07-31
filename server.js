@@ -14,103 +14,51 @@ app.use(express.json());
 
 const dataFile = path.join(__dirname, 'data', 'equipos.json');
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
-});
+app.get('/api/equipos', async (req, res) => {
+  const { data, error } = await supabase
+    .from('equipos')
+    .select('*');
 
-app.get('/api/equipos', (req, res) => {
-  const data = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+  if (error) return res.status(500).json({ mensaje: 'Error al obtener equipos', error });
   res.json(data);
 });
 
-app.post('/api/equipos', (req, res) => {
-const nuevoEquipo = {
-  id: Date.now().toString(),
-  tipo: req.body.tipo,
-  marca: req.body.marca,
-  modelo: req.body.modelo,
-  serie: req.body.serie,
-  usuario: req.body.usuario,
-  estado: req.body.estado,
-  fechaIngreso: req.body.fechaIngreso,
-  ubicacion: req.body.ubicacion,
-  caracteristicas: req.body.caracteristicas || '',
-  observaciones: req.body.observaciones || ''
-};
+app.post('/api/equipos', async (req, res) => {
+  const nuevoEquipo = {
+    id: Date.now().toString(), // o usa uuid
+    ...req.body
+  };
 
-  let data = [];
+  const { data, error } = await supabase
+    .from('equipos')
+    .insert([nuevoEquipo]);
 
-  if (fs.existsSync(dataFile)) {
-    const contenido = fs.readFileSync(dataFile, 'utf8');
-    data = contenido ? JSON.parse(contenido) : [];
-  }
-
-  data.push(nuevoEquipo);
-  fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
-
-  res.status(201).json(nuevoEquipo); // Aquí devuelves el equipo completo
+  if (error) return res.status(500).json({ mensaje: 'Error al insertar', error });
+  res.status(201).json(data[0]);
 });
 
-app.delete('/api/equipos/:id', (req, res) => {
-  try {
-    const id = req.params.id;
-    let data = [];
+app.delete('/api/equipos/:id', async (req, res) => {
+  const { id } = req.params;
 
-    if (fs.existsSync(dataFile)) {
-      const contenido = fs.readFileSync(dataFile, 'utf8');
-      data = contenido ? JSON.parse(contenido) : [];
-    }
+  const { error } = await supabase
+    .from('equipos')
+    .delete()
+    .eq('id', id);
 
-    // Filtramos para eliminar el equipo con el id dado
-    const nuevosDatos = data.filter(equipo => equipo.id !== id);
-
-    fs.writeFileSync(dataFile, JSON.stringify(nuevosDatos, null, 2));
-
-    res.json({ mensaje: 'Equipo eliminado' });
-  } catch (error) {
-    console.error('Error al eliminar equipo:', error);
-    res.status(500).json({ mensaje: 'Error al eliminar equipo' });
-  }
+  if (error) return res.status(500).json({ mensaje: 'Error al eliminar', error });
+  res.json({ mensaje: 'Equipo eliminado' });
 });
 
-app.put('/api/equipos/:id', (req, res) => {
-  try {
-    const id = req.params.id;
-    let data = [];
+app.put('/api/equipos/:id', async (req, res) => {
+  const { id } = req.params;
 
-    if (fs.existsSync(dataFile)) {
-      const contenido = fs.readFileSync(dataFile, 'utf8');
-      data = contenido ? JSON.parse(contenido) : [];
-    }
+  const { data, error } = await supabase
+    .from('equipos')
+    .update(req.body)
+    .eq('id', id);
 
-    const index = data.findIndex(equipo => equipo.id === id);
-    if (index === -1) {
-      return res.status(404).json({ mensaje: 'Equipo no encontrado' });
-    }
-
-    // Actualiza el equipo con los nuevos datos
-    data[index] = {
-  ...data[index], // conserva id
-  tipo: req.body.tipo,
-  marca: req.body.marca,
-  modelo: req.body.modelo,
-  serie: req.body.serie,
-  usuario: req.body.usuario,
-  estado: req.body.estado,
-  fechaIngreso: req.body.fechaIngreso,
-  ubicacion: req.body.ubicacion,
-  caracteristicas: req.body.caracteristicas || '',
-  observaciones: req.body.observaciones || ''
-};
-
-    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
-
-    res.json(data[index]);
-
-  } catch (error) {
-    console.error('Error al actualizar equipo:', error);
-    res.status(500).json({ mensaje: 'Error al actualizar equipo' });
-  }
+  if (error) return res.status(500).json({ mensaje: 'Error al actualizar', error });
+  res.json(data[0]);
 });
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
