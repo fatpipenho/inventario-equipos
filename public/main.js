@@ -12,24 +12,31 @@ document.addEventListener('DOMContentLoaded', () => {
     equipos.forEach(equipo => agregarFila(equipo));
   }
 
-  function agregarFila(equipo) {
-    const tr = document.createElement('tr');
-    tr.dataset.id = equipo.id;
 
-    tr.innerHTML = `
-      <td>${equipo.tipo}</td>
-      <td>${equipo.marca}</td>
-      <td>${equipo.modelo}</td>
-      <td>${equipo.serie}</td>
-      <td>${equipo.usuario}</td>
-      <td>${equipo.estado}</td>
-      <td>${equipo.fechaIngreso}</td>
-      <td>${equipo.ubicacion}</td>
-      <td>
-        <button class="btn-editar">✏️ Editar</button>
-        <button class="btn-eliminar">🗑️ Eliminar</button>
-      </td>
-    `;
+
+    function agregarFila(equipo) {
+  const tr = document.createElement('tr');
+  tr.dataset.id = equipo.id;
+
+  tr.innerHTML = `
+    <td>${equipo.tipo}</td>
+    <td>${equipo.marca}</td>
+    <td>${equipo.modelo}</td>
+    <td>${equipo.serie}</td>
+    <td>${equipo.usuario}</td>
+    <td>${equipo.estado}</td>
+    <td>${equipo.fechaIngreso}</td>
+    <td>${equipo.ubicacion}</td>
+    <td>${equipo.caracteristicas || ''}</td>
+    <td>${equipo.observaciones || ''}</td>
+    <td>
+      <button class="btn-editar">✏️ Editar</button>
+      <button class="btn-eliminar">🗑️ Eliminar</button>
+    </td>
+  `;
+
+  
+
 
     tablaEquipos.appendChild(tr);
 
@@ -40,14 +47,24 @@ document.addEventListener('DOMContentLoaded', () => {
       else alert('Error al eliminar equipo');
     });
 
-    tr.querySelector('.btn-editar').addEventListener('click', () => {
-      modoEdicion = true;
-      equipoEditandoId = equipo.id;
-      for (let campo in equipo) {
-        if (formulario[campo]) formulario[campo].value = equipo[campo];
-      }
-      formulario.querySelector('button[type="submit"]').textContent = 'Guardar Cambios';
-    });
+   tr.querySelector('.btn-editar').addEventListener('click', () => {
+  modoEdicion = true;
+  equipoEditandoId = equipo.id;
+
+  formulario.tipo.value = equipo.tipo;
+  formulario.marca.value = equipo.marca;
+  formulario.modelo.value = equipo.modelo;
+  formulario.serie.value = equipo.serie;
+  formulario.usuario.value = equipo.usuario;
+  formulario.estado.value = equipo.estado;
+  formulario.fechaIngreso.value = equipo.fechaIngreso;
+  formulario.ubicacion.value = equipo.ubicacion;
+
+  formulario.caracteristicas.value = equipo.caracteristicas || '';
+  formulario.observaciones.value = equipo.observaciones || '';
+
+  formulario.querySelector('button[type="submit"]').textContent = 'Guardar Cambios';
+   });
   }
 
   formulario.addEventListener('submit', async (e) => {

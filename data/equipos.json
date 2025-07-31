@@ -9,5 +9,75 @@
     "estado": "hhhhhhhhhhhhhh",
     "fechaIngreso": "1212-12-12",
     "ubicacion": "asdasdas"
+  },
+  {
+    "id": "1753921592771",
+    "tipo": "hh",
+    "marca": "ahhhh",
+    "modelo": "hh",
+    "serie": "hh",
+    "usuario": "hhh",
+    "estado": "hhh",
+    "fechaIngreso": "0012-12-12",
+    "ubicacion": "kkkk"
+  },
+  {
+    "id": "1753921786369",
+    "tipo": "sadads",
+    "marca": "asdas",
+    "modelo": "asda",
+    "serie": "sadas",
+    "usuario": "asdas",
+    "estado": "asdas",
+    "fechaIngreso": "1212-12-12",
+    "ubicacion": "asda"
+  },
+  {
+    "id": "1753922036368",
+    "tipo": "ggg",
+    "marca": "ggg",
+    "modelo": "gg",
+    "serie": "gg",
+    "usuario": "gg",
+    "estado": "gg",
+    "fechaIngreso": "0012-02-12",
+    "ubicacion": "hh"
+  },
+  {
+    "id": "1753922235386",
+    "tipo": "asdas",
+    "marca": "asdas",
+    "modelo": "asdas",
+    "serie": "asd",
+    "usuario": "asdsa",
+    "estado": "asdas",
+    "fechaIngreso": "0012-12-12",
+    "ubicacion": "asdasd"
+  },
+  {
+    "id": "1753922934422",
+    "tipo": "sad",
+    "marca": "asd",
+    "modelo": "asd",
+    "serie": "asd",
+    "usuario": "asd",
+    "estado": "asd",
+    "fechaIngreso": "1212-12-12",
+    "ubicacion": "asdad",
+    "caracteristicas": "",
+    "observaciones": ""
+  },
+  {
+    "id": "1753922947297",
+    "tipo": "ddd",
+    "marca": "dd",
+    "modelo": "dd",
+    "serie": "dd",
+    "usuario": "dd",
+    "estado": "dd",
+    "fechaIngreso": "0012-12-12",
+    "ubicacion": "sad",
+    "caracteristicas": "jjjj",
+    "observaciones": "jjjj"
   }
 ]

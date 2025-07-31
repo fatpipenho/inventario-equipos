@@ -2,6 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
+const supabase = require('./supabaseClient');
+
 const app = express();
 console.log("Servidor iniciando...");
 const PORT = 3000;
@@ -22,17 +24,19 @@ app.get('/api/equipos', (req, res) => {
 });
 
 app.post('/api/equipos', (req, res) => {
-  const nuevoEquipo = {
-    id: Date.now().toString(),
-    tipo: req.body.tipo,
-    marca: req.body.marca,
-    modelo: req.body.modelo,
-    serie: req.body.serie,
-    usuario: req.body.usuario,
-    estado: req.body.estado,
-    fechaIngreso: req.body.fechaIngreso,
-    ubicacion: req.body.ubicacion,
-  };
+const nuevoEquipo = {
+  id: Date.now().toString(),
+  tipo: req.body.tipo,
+  marca: req.body.marca,
+  modelo: req.body.modelo,
+  serie: req.body.serie,
+  usuario: req.body.usuario,
+  estado: req.body.estado,
+  fechaIngreso: req.body.fechaIngreso,
+  ubicacion: req.body.ubicacion,
+  caracteristicas: req.body.caracteristicas || '',
+  observaciones: req.body.observaciones || ''
+};
 
   let data = [];
 
@@ -86,16 +90,18 @@ app.put('/api/equipos/:id', (req, res) => {
 
     // Actualiza el equipo con los nuevos datos
     data[index] = {
-      ...data[index], // conserva id
-      tipo: req.body.tipo,
-      marca: req.body.marca,
-      modelo: req.body.modelo,
-      serie: req.body.serie,
-      usuario: req.body.usuario,
-      estado: req.body.estado,
-      fechaIngreso: req.body.fechaIngreso,
-      ubicacion: req.body.ubicacion,
-    };
+  ...data[index], // conserva id
+  tipo: req.body.tipo,
+  marca: req.body.marca,
+  modelo: req.body.modelo,
+  serie: req.body.serie,
+  usuario: req.body.usuario,
+  estado: req.body.estado,
+  fechaIngreso: req.body.fechaIngreso,
+  ubicacion: req.body.ubicacion,
+  caracteristicas: req.body.caracteristicas || '',
+  observaciones: req.body.observaciones || ''
+};
 
     fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 

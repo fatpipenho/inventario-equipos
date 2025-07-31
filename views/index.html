@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,10 +14,13 @@
       background: #f7f9fc;
       color: #333;
     }
-    h1, h2 {
+
+    h1,
+    h2 {
       text-align: center;
       color: #004080;
     }
+
     form {
       background: #fff;
       padding: 15px 20px;
@@ -24,11 +28,13 @@
       box-shadow: 0 0 10px #ccc;
       margin-bottom: 30px;
     }
+
     form label {
       display: block;
       margin: 10px 0 4px;
       font-weight: bold;
     }
+
     form input[type="text"],
     form input[type="date"] {
       width: 100%;
@@ -37,6 +43,7 @@
       border-radius: 4px;
       border: 1px solid #aaa;
     }
+
     form button {
       margin-top: 15px;
       padding: 10px 20px;
@@ -48,9 +55,11 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
+
     form button:hover {
       background: #005f99;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -59,20 +68,26 @@
       border-radius: 8px;
       overflow: hidden;
     }
-    th, td {
+
+    th,
+    td {
       padding: 10px 12px;
       text-align: left;
       border-bottom: 1px solid #ddd;
     }
+
     th {
       background-color: #007acc;
       color: white;
       user-select: none;
     }
+
     tr:hover {
       background-color: #f0f8ff;
     }
-    button.btn-editar, button.btn-eliminar {
+
+    button.btn-editar,
+    button.btn-eliminar {
       padding: 5px 10px;
       margin-right: 5px;
       border: none;
@@ -80,22 +95,27 @@
       cursor: pointer;
       font-size: 14px;
     }
+
     button.btn-editar {
       background-color: #ffc107;
       color: #333;
     }
+
     button.btn-eliminar {
       background-color: #dc3545;
       color: white;
     }
+
     button.btn-editar:hover {
       background-color: #e0a800;
     }
+
     button.btn-eliminar:hover {
       background-color: #bd2130;
     }
   </style>
 </head>
+
 <body>
   <h1>Inventario de Equipos</h1>
 
@@ -139,6 +159,8 @@
         <th>Estado</th>
         <th>Fecha ingreso</th>
         <th>Ubicación</th>
+        <th>Características</th>
+        <th>Observaciones</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -168,19 +190,21 @@
       tr.dataset.id = equipo.id;
 
       tr.innerHTML = `
-        <td>${equipo.tipo}</td>
-        <td>${equipo.marca}</td>
-        <td>${equipo.modelo}</td>
-        <td>${equipo.serie}</td>
-        <td>${equipo.usuario}</td>
-        <td>${equipo.estado}</td>
-        <td>${equipo.fechaIngreso}</td>
-        <td>${equipo.ubicacion}</td>
-        <td>
-          <button class="btn-editar">✏️ Editar</button>
-          <button class="btn-eliminar">🗑️ Eliminar</button>
-        </td>
-      `;
+     <td>${equipo.tipo}</td>
+     <td>${equipo.marca}</td>
+     <td>${equipo.modelo}</td>
+     <td>${equipo.serie}</td>
+      <td>${equipo.usuario}</td>
+      <td>${equipo.estado}</td>
+     <td>${equipo.fechaIngreso}</td>
+     <td>${equipo.ubicacion}</td>
+      <td>${equipo.caracteristicas || ''}</td>
+      <td>${equipo.observaciones || ''}</td>
+      <td>
+    <button class="btn-editar">✏️ Editar</button>
+    <button class="btn-eliminar">🗑️ Eliminar</button>
+  </td>
+`;
 
       tablaEquipos.appendChild(tr);
 
@@ -277,4 +301,5 @@
     cargarEquipos();
   </script>
 </body>
+
 </html>

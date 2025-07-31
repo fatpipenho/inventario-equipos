@@ -19,19 +19,21 @@ document.addEventListener('DOMContentLoaded', () => {
     tr.dataset.id = equipo.id;
 
     tr.innerHTML = `
-      <td>${equipo.tipo}</td>
-      <td>${equipo.marca}</td>
-      <td>${equipo.modelo}</td>
-      <td>${equipo.serie}</td>
-      <td>${equipo.usuario}</td>
-      <td>${equipo.estado}</td>
-      <td>${equipo.fechaIngreso}</td>
-      <td>${equipo.ubicacion}</td>
-      <td>
-        <button class="btn-editar">✏️ Editar</button>
-        <button class="btn-eliminar">🗑️ Eliminar</button>
-      </td>
-    `;
+  <td>${equipo.tipo}</td>
+  <td>${equipo.marca}</td>
+  <td>${equipo.modelo}</td>
+  <td>${equipo.serie}</td>
+  <td>${equipo.usuario}</td>
+  <td>${equipo.estado}</td>
+  <td>${equipo.fechaIngreso}</td>
+  <td>${equipo.ubicacion}</td>
+  <td>${equipo.caracteristicas || ''}</td>
+  <td>${equipo.observaciones || ''}</td>
+  <td>
+    <button class="btn-editar">✏️ Editar</button>
+    <button class="btn-eliminar">🗑️ Eliminar</button>
+  </td>
+`;
 
     tablaEquipos.appendChild(tr);
 
