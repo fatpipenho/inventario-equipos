@@ -4,7 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inventario de Equipos</title>
+   
+
+   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+   
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -113,11 +116,36 @@
     button.btn-eliminar:hover {
       background-color: #bd2130;
     }
+    th.asc::after {
+     content: " ▲";
+     }
+
+     th.desc::after {
+      content: " ▼";
+    }
+
+     #buscador {
+      width: 100%;
+      max-width: 300px;
+      padding: 8px 12px;
+      margin-bottom: 20px;
+      border: 2px solid #007acc;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+      #buscador:focus {
+      outline: none;
+      border-color: #005f99;
+      box-shadow: 0 0 5px rgba(0, 122, 204, 0.6);
+    }
   </style>
 </head>
 
 <body>
-  <h1>Inventario de Equipos</h1>
+  <h1 class="text-3xl font-bold text-center text-blue-900">Inventario de Equipos</h1>
 
   <form id="formulario">
     <label for="tipo">Tipo:</label>
@@ -152,10 +180,15 @@
 
 
 
-    <button type="submit">Agregar Equipo</button>
+    <button type="submit">Agregar Equipo </button> 
+    <button id="exportCSV" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded">
+      Exportar a CSV
+    </button>
   </form>
 
-  <h2>Equipos en inventario</h2>
+  <h2 class="text-2xl font-semibold text-center text-blue-900 mt-6">Equipos en inventario</h2>
+    <label for="buscador">Buscar:</label>
+   <input type="text" id="buscador" placeholder="Busca por cualquier campo...">
   <table>
     <thead>
       <tr>
@@ -178,6 +211,67 @@
   </table>
 
   <script src="/main.js"></script>
+  <script>
+  document.getElementById('exportCSV').addEventListener('click', () => {
+    fetch('/api/equipos')
+      .then(res => res.json())
+      .then(data => {
+        const headers = Object.keys(data[0]);
+        const csvRows = [];
+
+        // Encabezados
+        csvRows.push(headers.join(','));
+
+        // Filas
+        data.forEach(equipo => {
+          const values = headers.map(h => `"${(equipo[h] || '').toString().replace(/"/g, '""')}"`);
+          csvRows.push(values.join(','));
+        });
+
+        const csvData = csvRows.join('\n');
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'equipos.csv');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => {
+        alert('Error al exportar CSV');
+        console.error(error);
+      });
+  });
+</script>
+<script>
+// Func ordenar columnas
+document.querySelectorAll("th").forEach((th, index) => {
+  th.addEventListener("click", () => {
+    const table = th.closest("table");
+    const tbody = table.querySelector("tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+
+    const isAsc = th.classList.contains("asc");
+    rows.sort((a, b) => {
+      const aText = a.children[index].textContent.trim();
+      const bText = b.children[index].textContent.trim();
+
+      return isAsc
+        ? aText.localeCompare(bText)
+        : bText.localeCompare(aText);
+    });
+
+    // limpia clases anteriores
+    table.querySelectorAll("th").forEach(t => t.classList.remove("asc", "desc"));
+    th.classList.toggle("asc", !isAsc);
+    th.classList.toggle("desc", isAsc);
+
+    rows.forEach(row => tbody.appendChild(row));
+  });
+});
+</script>
 </body>
 
 </html>

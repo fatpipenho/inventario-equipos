@@ -104,5 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  document.getElementById('buscador').addEventListener('input', function() {
+  const filtro = this.value.toLowerCase();
+  const filas = document.querySelectorAll('#tablaEquipos tr');
+
+  filas.forEach(fila => {
+    const textoFila = fila.textContent.toLowerCase();
+    if (textoFila.includes(filtro)) {
+      fila.style.display = '';
+    } else {
+      fila.style.display = 'none';
+    }
+  });
+});
+
   cargarEquipos();
 });
