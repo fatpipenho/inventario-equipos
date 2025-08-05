@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const equipos = await res.json();
     tablaEquipos.innerHTML = '';
     equipos.forEach(equipo => agregarFila(equipo));
+
+   document.getElementById('contadorRegistros').innerText = `${equipos.length} registros encontrados`;
+
   }
 
 
@@ -108,14 +111,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const filtro = this.value.toLowerCase();
   const filas = document.querySelectorAll('#tablaEquipos tr');
 
+  let visibles = 0;
   filas.forEach(fila => {
     const textoFila = fila.textContent.toLowerCase();
     if (textoFila.includes(filtro)) {
       fila.style.display = '';
+      visibles++;
     } else {
       fila.style.display = 'none';
     }
   });
+
+  document.getElementById('contadorRegistros').innerText = `${visibles} registros encontrados`;
 });
 
   cargarEquipos();

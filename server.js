@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const dataFile = path.join(__dirname, 'data', 'equipos.json');
-
+// get para obtener equipos desde supabase
 app.get('/api/equipos', async (req, res) => {
   try {
     const { data, error } = await supabase
@@ -31,7 +31,7 @@ app.get('/api/equipos', async (req, res) => {
     res.status(500).json({ mensaje: 'Error al obtener equipos' });
   }
 });
-
+// post para insertar datos en tablas
 app.post('/api/equipos', async (req, res) => {
   const nuevoEquipo = {
     id: Date.now().toString(),
@@ -60,7 +60,7 @@ app.post('/api/equipos', async (req, res) => {
     res.status(500).json({ mensaje: 'Error al guardar equipo en Supabase' });
   }
 });
-
+// delete para eliminar datos de los registros
 app.delete('/api/equipos/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -81,7 +81,7 @@ app.delete('/api/equipos/:id', async (req, res) => {
     res.status(500).json({ mensaje: 'Error al eliminar equipo' });
   }
 });
-
+//put para modificar datos ya ingresados(update)
 app.put('/api/equipos/:id', async (req, res) => {
   try {
     const id = req.params.id;

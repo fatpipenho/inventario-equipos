@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let modoEdicion = false;
   let equipoEditandoId = null;
 
-  // Carga y muestra todos los equipos
+  // carga y muestra todos los equipos
   async function cargarEquipos() {
     const res = await fetch('/api/equipos');
     const equipos = await res.json();
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     equipos.forEach(equipo => agregarFila(equipo));
   }
 
-  // Agrega una fila a la tabla
+  // agrega una fila a la tabla
   function agregarFila(equipo) {
     const tr = document.createElement('tr');
     tr.dataset.id = equipo.id;
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tablaEquipos.appendChild(tr);
 
-    // Botón eliminar
+    // boton para eliminar
     tr.querySelector('.btn-eliminar').addEventListener('click', async () => {
       if (!confirm('¿Seguro que quieres eliminar este equipo?')) return;
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Botón editar
+    // boton para editarr
     tr.querySelector('.btn-editar').addEventListener('click', () => {
       modoEdicion = true;
       equipoEditandoId = equipo.id;
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (modoEdicion) {
-      // Editar equipo
+      // editar equipo
       const res = await fetch(`/api/equipos/${equipoEditandoId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Error al actualizar equipo');
       }
     } else {
-      // Agregar nuevo equipo
+      // agregar nuevo quipo
       const res = await fetch('/api/equipos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
